@@ -1,0 +1,18 @@
+!!!
+%html(lang="ja")
+  %head
+    %meta(charset="UTF-8")/
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")/
+    %meta(http-equiv="X-UA-Compatible" content="ie=edge")/
+    %title 一覧ページ
+  %body
+    %h1 一覧ページ
+    %a(href="/new")新規メモ作成
+    %br
+    %br
+    - @memo_files.each do |f|
+      %p
+      %a(href="/#{f}")=parse_txt_title("#{f}")
+      %p 
+        %a(href="/#{f}/edit")編集 
+        %a(href="#") 削除
