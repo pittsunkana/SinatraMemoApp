@@ -75,12 +75,9 @@ def extract_content(id)
   array_to_text(id).last
 end
 
-def parse_txt_content(id)
-  #TODO:splitメソッドで本文取得する
-  File.open("memos/#{id}","rt")do |f|
-    f.each_line(rs=""){|line|
-      @content= line.chomp(rs="")
-    }
+helpers do
+  def nl_to_br(content)
+    content.include?("\n") ? content.gsub(/(\r\n|\r|\n)/, "<br />") : return
   end
   @content
 end
