@@ -25,7 +25,15 @@ get "/:id/edit" do
 end
 
 put "/:id" do
-  redirect "/#{params['id']}"
+  @title =params[:title]
+  @content =params[:content]
+
+  File.open("memos/#{params['id']}", "w") do |f|
+    f.puts("#{@title}")
+    f.puts("")
+    f.puts(@content)
+  end
+   redirect "/#{params['id']}"
 end
 
 delete "/:id" do
