@@ -60,9 +60,11 @@ def generate_id
 end
 
 def parse_txt_title(id)
+  title = ""
   File.open("memos/#{id}"){|f|
-    p f.gets
+    title = f.gets
   }
+  title
 end
 
 def parse_txt_content(id)
