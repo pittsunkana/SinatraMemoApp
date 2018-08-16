@@ -16,7 +16,5 @@
       %p  
         %form{method:"post", action: "/#{f}", name: "_delete"}
           %a(href="/#{f}/edit")編集
-        %a(href="/#{f}/edit")編集 
-          %a(href="/#{f}/edit")編集
           %input{type: "hidden", name: "_method", value:"DELETE"}
           %input{type: "submit", value: "削除"}
