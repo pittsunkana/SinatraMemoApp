@@ -59,15 +59,20 @@ end
 def generate_id
   "#{Time.now.to_i}-" + "#{SecureRandom.uuid}"
 end
+def array_to_text(id)
+  text_array = ""
+  File.open("memos/#{id}", "r") do |f|
+    text_array = f.read.split("\n\n")
+  end
+  text_array
 end
 
-def parse_txt_title(id)
-  #TODO:splitメソッドでタイトル取得する
-  title = ""
-  File.open("memos/#{id}"){|f|
-    title = f.gets
-  }
-  title
+def extract_title(id)
+  array_to_text(id).first
+end
+
+def extract_content(id)
+  array_to_text(id).last
 end
 
 def parse_txt_content(id)
