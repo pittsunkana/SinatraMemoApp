@@ -10,7 +10,7 @@
     %a(href="/new")新規メモ作成
     %br
     %br
-    - @memo_files.each do |f|
+    - @file_names.each do |f|
       %p
       %a(href="/#{f}")=parse_txt_title("#{f}")
       %p  

@@ -2,8 +2,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'haml'
 
-get '/' do
-  @memo_files=Dir.children("memos/")
+  @file_names = Dir.children("memos/").sort
   haml :index
 end
 get "/new" do
