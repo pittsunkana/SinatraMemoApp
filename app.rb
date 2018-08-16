@@ -11,15 +11,16 @@ get "/new" do
 end
 
 get "/:id" do
-  @title = parse_txt_title(params['id'])
-  @content = parse_txt_content(params['id'])
+  @id=params['id']
+  @title = parse_txt_title(@id)
+  @content = parse_txt_content(@id)
   haml :show
 end
 
 get "/:id/edit" do
-  @title = parse_txt_title(params['id'])
-  @content = parse_txt_content(params['id'])
   @id = params['id']
+  @title = parse_txt_title(@id)
+  @content = parse_txt_content(@id)
 
   haml :edit
 end
