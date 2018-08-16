@@ -9,7 +9,7 @@
     %h1 編集ページ
 
     %form(action="/#{@id}" method="post")
-      %input(type="hidden" name="_method" value="put")/
+      %input(type="hidden" name="_method" value="patch")/
       タイトル:
       %br/
       %input(type="text" name="title" value=@title)/

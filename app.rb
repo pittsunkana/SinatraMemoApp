@@ -39,11 +39,7 @@ delete "/:id" do
   redirect "/"
 end
 
-post '/' do
-  @title =params[:title]
-  @content =params[:content]
-  @time = Time.now.to_i
-  new_id = generate_id
+patch "/:id" do
 
   File.open("memos/#{new_id}","w") do |f|
     f.puts("#{@title}")
