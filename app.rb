@@ -56,10 +56,12 @@ post '/' do
 end
 
 def generate_id
+  #TODO:同秒数考慮して、SecureRandom使う
   Time.now.to_i
 end
 
 def parse_txt_title(id)
+  #TODO:splitメソッドでタイトル取得する
   title = ""
   File.open("memos/#{id}"){|f|
     title = f.gets
@@ -68,7 +70,8 @@ def parse_txt_title(id)
 end
 
 def parse_txt_content(id)
-  File.open("memos/#{id}", mode = "rt")do |f|
+  #TODO:splitメソッドで本文取得する
+  File.open("memos/#{id}","rt")do |f|
     f.each_line(rs=""){|line|
       @content= line.chomp(rs="")
     }
