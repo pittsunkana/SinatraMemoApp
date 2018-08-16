@@ -9,7 +9,7 @@
     %h1 詳細
     = @title
     %br/
-    = @content
+    = nl_to_br(@content)
     %p
       %a(href="/#{@id}/edit") 編集
       %a(href="/") 一覧へ戻る
