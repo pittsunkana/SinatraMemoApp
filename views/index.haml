@@ -13,6 +13,10 @@
     - @memo_files.each do |f|
       %p
       %a(href="/#{f}")=parse_txt_title("#{f}")
-      %p 
+      %p  
+        %form{method:"post", action: "/#{f}", name: "_delete"}
+          %a(href="/#{f}/edit")編集
         %a(href="/#{f}/edit")編集 
-        %a(href="#") 削除
+          %a(href="/#{f}/edit")編集
+          %input{type: "hidden", name: "_method", value:"DELETE"}
+          %input{type: "submit", value: "削除"}

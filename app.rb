@@ -37,7 +37,8 @@ put "/:id" do
 end
 
 delete "/:id" do
-
+  File.delete("memos/#{params['id']}")
+  redirect "/"
 end
 
 post '/' do
