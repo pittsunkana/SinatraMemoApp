@@ -57,8 +57,8 @@ post '/' do
 end
 
 def generate_id
-  #TODO:同秒数考慮して、SecureRandom使う
-  Time.now.to_i
+  "#{Time.now.to_i}-" + "#{SecureRandom.uuid}"
+end
 end
 
 def parse_txt_title(id)
