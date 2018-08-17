@@ -3,8 +3,10 @@ require "sinatra/reloader"
 require "haml"
 require "securerandom"
 
+FILE = "memos/".freeze
+
 get "/" do
-  @file_names = Dir.children("memos/").sort
+  @file_names = Dir.children("#{FILE}").sort
   haml :index
 end
 get "/new" do
@@ -31,7 +33,7 @@ post "/" do
   @content = params[:content]
   new_id = generate_id
 
-  File.open("memos/#{new_id}", "w") do |f|
+  File.open("#{FILE}#{new_id}", "w") do |f|
     f.puts("#{@title}")
     f.puts("")
     f.puts(@content)
@@ -43,7 +45,7 @@ patch "/:id" do
   @title = params[:title]
   @content = params[:content]
 
-  File.open("memos/#{params["id"]}", "w") do |f|
+  File.open("#{FILE}#{params["id"]}", "w") do |f|
     f.puts("#{@title}")
     f.puts("")
     f.puts(@content)
@@ -52,7 +54,7 @@ patch "/:id" do
 end
 
 delete "/:id" do
-  File.delete("memos/#{params["id"]}")
+  File.delete("#{FILE}#{params["id"]}")
   redirect "/"
 end
 
@@ -62,7 +64,7 @@ end
 
 def array_to_text(id)
   text_array = ""
-  File.open("memos/#{id}", "r") do |f|
+  File.open("#{FILE}#{id}", "r") do |f|
     text_array = f.read.split("\n\n")
   end
   text_array
