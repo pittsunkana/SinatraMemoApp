@@ -6,7 +6,7 @@ require "securerandom"
 DIR = "memos/".freeze
 
 get "/" do
-  @file_names = Dir.children("#{DIR}").sort
+  @file_names = Dir.children(DIR).sort
   haml :index
 end
 get "/new" do
@@ -29,8 +29,8 @@ get "/:id/edit" do
 end
 
 post "/" do
-  @title = params[:title]
-  @content = params[:content]
+  @title = params["title"]
+  @content = params["content"]
   new_id = generate_id
 
   File.open("#{DIR}#{new_id}", "w") do |f|
@@ -59,15 +59,13 @@ delete "/:id" do
 end
 
 def generate_id
-  "#{Time.now.to_i}-" + "#{SecureRandom.uuid}"
+  "#{Time.now.to_i}-#{SecureRandom.uuid}"
 end
 
 def array_to_text(id)
-  text_array = ""
   File.open("#{DIR}#{id}", "r") do |f|
-    text_array = f.read.split("\n\n")
+    f.read.split("\n\n")
   end
-  text_array
 end
 
 def extract_title(id)
@@ -80,6 +78,6 @@ end
 
 helpers do
   def nl_to_br(content)
-    content.include?("\n") ? content.gsub(/(\r\n|\r|\n)/, "<br />") : return
+    content.gsub(/(\r\n|\r|\n)/, "<br />")
   end
 end
