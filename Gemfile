@@ -9,4 +9,3 @@ gem 'sinatra-contrib'
 gem 'redcarpet'
 gem 'haml'
 gem 'rufo'
-
