@@ -1,22 +1,16 @@
-!!!
-%html(lang="ja")
-  %head
-    %meta(charset="UTF-8")/
-    %meta(name="viewport" content="width=device-width, initial-scale=1.0")/
-    %meta(http-equiv="X-UA-Compatible" content="ie=edge")/
-    %title Document
-  %body
-    %h1 編集ページ
-
-    %form(action="/#{@id}" method="post")
-      %input(type="hidden" name="_method" value="put")/
-      タイトル:
-      %br/
-      %input(type="text" name="title" value=@title)/
-      %br/
-      メモ:
-      %br/
-      %textarea{:name => "content",:cols => "50",:rows => "20" }
+.content-header
+  .container
+    .content-header__inner
+      %h1.content-header__title 新規メモ作成
+%form.memo-form(action="/#{@id}" method="post")
+  %input(type="hidden" name="_method" value="patch")/
+  .container
+    .memo-form__inner
+      %label.memo-form__label
+        タイトル
+      %input.memo-form__text-input(type="text" name="title" value =@title)
+      %label.memo-form__label
+        メモ
+      %textarea.memo-form__textarea{:name => "content",:cols => "50",:rows => "20", }
         =@content
-      %br/
-      %input(type="submit" value="送信")/
+      %input.memo-form__submit(type="submit" value="更新")

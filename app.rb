@@ -1,9 +1,12 @@
-require 'sinatra'
-require 'sinatra/reloader'
-require 'haml'
+require "sinatra"
+require "sinatra/reloader"
+require "haml"
+require "securerandom"
 
-get '/' do
-  @memo_files=Dir.children("memos/")
+DIR = "memos/".freeze
+
+get "/" do
+  @file_names = Dir.children(DIR).sort
   haml :index
 end
 get "/new" do
@@ -11,56 +14,70 @@ get "/new" do
 end
 
 get "/:id" do
-  @title = parse_txt_title(params['id'])
-  @content = parse_txt_content(params['id'])
+  @id = params["id"]
+  @title = extract_title(@id)
+  @content = extract_content(@id)
   haml :show
 end
 
 get "/:id/edit" do
-  @title = parse_txt_title(params['id'])
-  @content = parse_txt_content(params['id'])
-  @id = params['id']
+  @id = params["id"]
+  @title = extract_title(@id)
+  @content = extract_content(@id)
 
   haml :edit
 end
 
-put "/:id" do
-  redirect "/#{params['id']}"
-end
-
-delete "/:id" do
-
-end
-
-post '/' do
-  @title =params[:title]
-  @content =params[:content]
-  @time = Time.now.to_i
+post "/" do
+  @title = params["title"]
+  @content = params["content"]
   new_id = generate_id
 
-  File.open("memos/#{new_id}","w") do |f|
+  File.open("#{DIR}#{new_id}", "w") do |f|
     f.puts("#{@title}")
     f.puts("")
     f.puts(@content)
   end
-  redirect '/'
+  redirect "/"
+end
+
+patch "/:id" do
+  @title = params[:title]
+  @content = params[:content]
+
+  File.open("#{DIR}#{params["id"]}", "w") do |f|
+    f.puts("#{@title}")
+    f.puts("")
+    f.puts(@content)
+  end
+  redirect "/#{params["id"]}"
+end
+
+delete "/:id" do
+  File.delete("#{DIR}#{params["id"]}")
+  redirect "/"
 end
 
 def generate_id
-  Time.now.to_i
+  "#{Time.now.to_i}-#{SecureRandom.uuid}"
 end
 
-def parse_txt_title(id)
-  File.open("memos/#{id}"){|f|
-    p f.gets
-  }
-end
-
-def parse_txt_content(id)
-  File.open("memos/#{id}", mode = "rt")do |f|
-    f.each_line(rs=""){|line|
-      @content= line.chomp(rs="")
-    }
+def array_to_text(id)
+  File.open("#{DIR}#{id}", "r") do |f|
+    f.read.split("\n\n")
   end
-  @content
+end
+
+def extract_title(id)
+  array_to_text(id).first
+end
+
+def extract_content(id)
+  array_to_text(id).last
+end
+
+helpers do
+  def nl_to_br(content)
+    content.gsub(/(\r\n|\r|\n)/, "<br />")
+  end
 end

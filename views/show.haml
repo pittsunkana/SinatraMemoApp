@@ -1,12 +1,18 @@
-!!!
-%html(lang="ja")
-  %head
-    %meta(charset="UTF-8")/
-    %meta(name="viewport" content="width=device-width, initial-scale=1.0")/
-    %meta(http-equiv="X-UA-Compatible" content="ie=edge")/
-    %title 詳細ページ
-  %body
-    %h1 詳細
-    = @title
-    %br/
-    = @content
+.content-header
+  .container
+    .content-header__inner
+      %h1.content-header__title
+.memo
+  .container
+    .memo__inner
+      %h2.memo__title
+        = @title
+      .memo__body
+        = nl_to_br(@content)
+    .memos__item-actions
+      %a.memos__item-action.is-edit(href="/#{@id}/edit")
+        %i.fa.fa-edit
+      %input{type: "hidden", name: "_method", value:"DELETE"}
+      %button.memos__item-action.is-delete{type: "submit"}
+        %i.fas.fa-trash-alt
+      %a.memos__item-action.is-back(href="/") 一覧へ戻る
